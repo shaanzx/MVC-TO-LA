@@ -319,20 +319,22 @@ public class PlaceOrderFormController {
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-        Connection connection = null;
 
         try {
-            connection = DBConnection.getDbConnection().getConnection();
-            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
-            stm.setString(1, orderId);
-            /*if order id already exist*/
-            if (stm.executeQuery().next()) {
+            Connection connection = DBConnection.getDbConnection().getConnection();
 
-            }
+            orderDAO.existOrderId(orderId);
+           /* connection = DBConnection.getDbConnection().getConnection();
+            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
+            stm.setString(1, orderId);*/
+            /*if order id already exist*/
+         /*   if (stm.executeQuery().next()) {
+
+            }*/
 
             connection.setAutoCommit(false);
-            stm = orderDAO.saveOrder(orderId, orderDate, customerId);
-                if (stm.executeUpdate() != 1) {
+            PreparedStatement pst = orderDAO.saveOrder(orderId, orderDate, customerId);
+            if (pst.executeUpdate() != 1) {
                     connection.rollback();
                     connection.setAutoCommit(true);
                     return false;

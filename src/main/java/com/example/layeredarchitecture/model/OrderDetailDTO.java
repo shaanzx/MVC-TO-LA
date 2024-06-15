@@ -16,7 +16,7 @@ public class OrderDetailDTO implements Serializable {
     public OrderDetailDTO(String itemCode, int qty, BigDecimal unitPrice) {
         this.itemCode = itemCode;
         this.qty = qty;
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.multiply(BigDecimal.valueOf(qty));
     }
 
     public String getItemCode() {

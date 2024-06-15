@@ -14,11 +14,11 @@ public class OrderDAOImpl {
         return rst;
     }
 
-    public PreparedStatement existOrderId(String orderId) throws SQLException, ClassNotFoundException {
+    public void existOrderId(String orderId) throws SQLException, ClassNotFoundException {
         connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
         stm.setString(1, orderId);
-        return stm;
+        stm.executeQuery().next() ;
     }
 
     public PreparedStatement saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException, ClassNotFoundException {
