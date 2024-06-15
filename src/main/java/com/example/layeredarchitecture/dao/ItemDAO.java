@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ItemDao {
+public interface ItemDAO {
     ArrayList<ItemDTO> loadAllItem() throws SQLException, ClassNotFoundException;
 
     void saveItem(String code, String description, BigDecimal unitPrice, int qtyOnHand) throws SQLException, ClassNotFoundException;
