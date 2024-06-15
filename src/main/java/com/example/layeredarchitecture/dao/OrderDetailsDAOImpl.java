@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class OrderDetailsDAOImpl {
-
+public class OrderDetailsDAOImpl implements OrderDetailDAO {
+   @Override
     public boolean saveOrderDetails(List<OrderDetailDTO> orderDetails, String orderId) throws SQLException, ClassNotFoundException {
         for (OrderDetailDTO detail : orderDetails) {
             if(!saveOrderDetails(detail,orderId)){
@@ -18,7 +18,7 @@ public class OrderDetailsDAOImpl {
         }
         return true;
     }
-
+    @Override
     public boolean saveOrderDetails(OrderDetailDTO details, String orderId) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement stm =  connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");

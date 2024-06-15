@@ -1,24 +1,31 @@
 package com.example.layeredarchitecture.dao;
 
-import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
+import com.example.layeredarchitecture.model.OrderDetailDTO;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ItemDao {
-    public ArrayList<ItemDTO> loadAllItem() throws SQLException, ClassNotFoundException;
+    ArrayList<ItemDTO> loadAllItem() throws SQLException, ClassNotFoundException;
 
-    public void saveItem(String code, String description, BigDecimal unitPrice, int qtyOnHand) throws SQLException, ClassNotFoundException;
+    void saveItem(String code, String description, BigDecimal unitPrice, int qtyOnHand) throws SQLException, ClassNotFoundException;
 
-    public void updateItem(String code, String description, BigDecimal unitPrice, int qtyOnHand) throws SQLException, ClassNotFoundException;
+    void updateItem(String code, String description, BigDecimal unitPrice, int qtyOnHand) throws SQLException, ClassNotFoundException;
 
-    public void deleteItem(String code) throws SQLException, ClassNotFoundException;
+    void deleteItem(String code) throws SQLException, ClassNotFoundException;
 
-    public boolean exitItem(String code) throws SQLException, ClassNotFoundException;
+    boolean exitItem(String code) throws SQLException, ClassNotFoundException;
 
-    public ResultSet generateNextItemId() throws SQLException, ClassNotFoundException;
+    ResultSet generateNextItemId() throws SQLException, ClassNotFoundException;
 
-    public ResultSet findItem(String newItemCode) throws SQLException, ClassNotFoundException;
+    ResultSet findItem(String newItemCode) throws SQLException, ClassNotFoundException;
+
+    boolean updateItemQty(List<OrderDetailDTO> orderDetails, ItemDTO item) throws SQLException, ClassNotFoundException;
+
+    boolean updateItemQty(OrderDetailDTO orderDetail, ItemDTO item) throws SQLException, ClassNotFoundException;
+
+    ResultSet FindItem(String code) throws SQLException, ClassNotFoundException;
 }
