@@ -87,4 +87,13 @@ public class ItemDAOImpl implements ItemDao {
 
         return pstm.executeUpdate() > 0;
     }
+
+    public ResultSet FindItem(String code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        ResultSet rst = pstm.executeQuery();
+        rst.next();
+        return rst;
+    }
 }
