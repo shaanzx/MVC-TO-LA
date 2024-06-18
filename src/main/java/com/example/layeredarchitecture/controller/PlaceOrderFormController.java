@@ -323,8 +323,8 @@ public class PlaceOrderFormController {
 
             orderDAO.existOrderId(orderId);
             connection.setAutoCommit(false);
-            PreparedStatement pst = orderDAO.saveOrder(orderId, orderDate, customerId);
-            if (pst.executeUpdate() != 1) {
+            boolean isSaved = orderDAO.saveOrder(orderId, orderDate, customerId);
+            if (!isSaved) {
                     connection.rollback();
                     connection.setAutoCommit(true);
                     return false;

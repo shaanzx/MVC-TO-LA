@@ -174,6 +174,7 @@ public class ManageItemsFormController {
                 if (existItem(code)) {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
+                System.out.println(code+""+description+""+unitPrice+""+qtyOnHand);
                 itemDAO.saveItem(code,description,unitPrice,qtyOnHand);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 

@@ -8,25 +8,17 @@ import java.time.LocalDate;
 public class OrderDAOImpl implements OrderDAO {
     @Override
     public ResultSet generateOrderId() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
-        return rst;
+        ResultSet resultSet = SqlUtil.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1");
+        return resultSet;
     }
     @Override
-    public void existOrderId(String orderId) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
-        stm.setString(1, orderId);
-        stm.executeQuery().next() ;
+    public boolean existOrderId(String orderId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SqlUtil.executeQuery("SELECT oid FROM `Orders` WHERE oid=?",orderId);
+        return resultSet.next();
+
     }
     @Override
-    public PreparedStatement saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
-        stm.setString(1, orderId);
-        stm.setDate(2, Date.valueOf(orderDate));
-        stm.setString(3, customerId);
-        return stm;
+    public boolean saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException, ClassNotFoundException {
+        return SqlUtil.executeQuery("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)", orderId, orderDate, customerId);
     }
 }
