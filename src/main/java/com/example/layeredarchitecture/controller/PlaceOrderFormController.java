@@ -1,6 +1,13 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.*;
+import com.example.layeredarchitecture.dao.custom.CustomerDAO;
+import com.example.layeredarchitecture.dao.custom.ItemDAO;
+import com.example.layeredarchitecture.dao.custom.OrderDAO;
+import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
+import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.OrderDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.OrderDetailsDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -106,7 +113,7 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        ResultSet rst = customerDAO.searchCustomerId(newValue);
+                        ResultSet rst = customerDAO.search(newValue);
                         rst.next();
                         CustomerDTO customerDTO = new CustomerDTO(newValue + "", rst.getString("name"), rst.getString("address"));
 
@@ -135,7 +142,7 @@ public class PlaceOrderFormController {
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
-                    ResultSet rst = itemDAO.findItem(newItemCode);
+                    ResultSet rst = itemDAO.find(newItemCode);
                     rst.next();
                     ItemDTO item = new ItemDTO(newItemCode + "", rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));
 
@@ -182,12 +189,12 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        boolean exist = itemDAO.exitItem(code);
+        boolean exist = itemDAO.exist(code);
         return exist;
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        boolean exist = customerDAO.existCustomer(id);
+        boolean exist = customerDAO.exist(id);
         return exist;
     }
 
@@ -205,7 +212,7 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            ArrayList<CustomerDTO> customerDTOS = customerDAO.loadAllCustomers();
+            ArrayList<CustomerDTO> customerDTOS = customerDAO.loadAll();
             for(CustomerDTO customerDTO : customerDTOS) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
 
@@ -219,7 +226,7 @@ public class PlaceOrderFormController {
 
     private void loadAllItemCodes() {
         try {
-            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItem();
+            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAll();
             for(ItemDTO itemDTO : itemDTOS) {
                 cmbItemCode.getItems().add(itemDTO.getCode());
             }
