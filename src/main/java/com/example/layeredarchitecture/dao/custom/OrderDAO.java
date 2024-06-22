@@ -1,12 +1,8 @@
 package com.example.layeredarchitecture.dao.custom;
 
-import java.sql.*;
-import java.time.LocalDate;
 
-public interface OrderDAO {
-    ResultSet generateOrderId() throws SQLException, ClassNotFoundException;
+import com.example.layeredarchitecture.dao.CrudDAO;
+import com.example.layeredarchitecture.model.OrderDTO;
 
-    boolean existOrderId(String orderId) throws SQLException, ClassNotFoundException;
-
-    boolean saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException, ClassNotFoundException;
+public interface OrderDAO extends CrudDAO<OrderDTO> {
 }

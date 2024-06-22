@@ -3,7 +3,6 @@ module com.example.layeredarchitecture {
     requires javafx.fxml;
     requires com.jfoenix;
     requires java.sql;
-    requires java.desktop;
 
     opens com.example.layeredarchitecture to javafx.fxml;
     opens com.example.layeredarchitecture.controller to javafx.fxml;
